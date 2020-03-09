@@ -3,10 +3,12 @@ package com.example.pokedexv2.ui
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokedexv2.data.Pokemon
+import com.example.pokedexv2.data.PokemonPage
 import com.example.pokedexv2.databinding.ActivityPokemonGridBinding
 import com.example.pokedexv2.viewmodel.PokemonGridActivityViewModel
 
@@ -31,6 +33,12 @@ class PokemonGridActivity : AppCompatActivity() {
             val intent = Intent(this, PokemonInfoActivity::class.java)
             startActivity(intent)
         }
+
+
+
+//        viewModel.pokemonPage.observe(this, Observer {
+//            pokemonPage -> viewModel.pokemonList
+//        })
 
 //        viewModel.pokemonSet.observe(this, Observer<PokemonSet> {
 //            pokemonSet -> binding.textSimple.text = pokemonSet.nextSetUrl

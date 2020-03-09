@@ -3,6 +3,7 @@ package com.example.pokedexv2.repository
 import android.util.Log
 import android.util.Log.d
 import androidx.lifecycle.MutableLiveData
+import com.example.pokedexv2.data.Pokemon
 import com.example.pokedexv2.data.PokemonPage
 import okhttp3.OkHttpClient
 import retrofit2.Call
@@ -13,11 +14,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object PokemonRepository {
 
-    init {
-        Log.d("MAMAMO", "YOW")
-    }
-
-//    private var pokemonPage = MutableLiveData<PokemonPage>()
+    private var pokemonList = mutableListOf<Pokemon>()
+    private val pokemonListLiveData = MutableLiveData<List<Pokemon>>()
 
     private val pokemonAPI = Retrofit.Builder()
         .baseUrl("https://pokeapi.co/api/v2/")
@@ -34,10 +32,18 @@ object PokemonRepository {
             }
             override fun onResponse(call: Call<PokemonPage>, response: Response<PokemonPage>) {
                 pokemonPage.value = response.body()
+                addPokemonPageToPokemonList(response.body()!!.pokemonList)
             }
         })
 
         return pokemonPage
+    }
+
+    fun getPokemonList(): MutableLiveData<List<Pokemon>> = pokemonListLiveData
+
+    private fun addPokemonPageToPokemonList(newPokemonList: List<Pokemon>) {
+        pokemonList.addAll(newPokemonList)
+        pokemonListLiveData.value = pokemonList
     }
 
 }
