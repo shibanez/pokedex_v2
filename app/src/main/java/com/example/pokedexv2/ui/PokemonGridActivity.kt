@@ -32,12 +32,12 @@ class PokemonGridActivity : AppCompatActivity() {
 
         recyclerView = binding.recyclerViewPokemonGrid
         recyclerViewLayoutManager = GridLayoutManager(this, 2)
-        recyclerViewAdapter = PokemonAdapter(this, pokemonList)
+        recyclerViewAdapter = PokemonAdapter(pokemonList)
         recyclerView.adapter = recyclerViewAdapter
         recyclerView.layoutManager = recyclerViewLayoutManager
 
         viewModel.pokemonList.observe(this, Observer<List<Pokemon>> {
-            pokemonList -> recyclerView.adapter = PokemonAdapter(this, pokemonList)
+            pokemonList -> recyclerView.adapter = PokemonAdapter(pokemonList)
         })
     }
 
