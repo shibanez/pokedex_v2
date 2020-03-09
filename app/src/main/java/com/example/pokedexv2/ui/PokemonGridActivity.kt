@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.pokedexv2.adapters.PokemonAdapter
 import com.example.pokedexv2.data.Pokemon
 import com.example.pokedexv2.data.PokemonPage
 import com.example.pokedexv2.databinding.ActivityPokemonGridBinding
@@ -18,7 +19,7 @@ class PokemonGridActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var recyclerViewAdapter: RecyclerView.Adapter<*>
     private lateinit var recyclerViewLayoutManager: GridLayoutManager
-    private lateinit var pokemonList: List<Pokemon>
+    private var pokemonList = listOf<Pokemon>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,31 +30,17 @@ class PokemonGridActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        binding.button.setOnClickListener {
-            val intent = Intent(this, PokemonInfoActivity::class.java)
-            startActivity(intent)
-        }
+        recyclerView = binding.recyclerViewPokemonGrid
+        recyclerViewLayoutManager = GridLayoutManager(this, 2)
+        recyclerViewAdapter = PokemonAdapter(this, pokemonList)
+        recyclerView.adapter = recyclerViewAdapter
+        recyclerView.layoutManager = recyclerViewLayoutManager
 
-
-
-//        viewModel.pokemonPage.observe(this, Observer {
-//            pokemonPage -> viewModel.pokemonList
-//        })
-
-//        viewModel.pokemonSet.observe(this, Observer<PokemonSet> {
-//            pokemonSet -> binding.textSimple.text = pokemonSet.nextSetUrl
-//        })
-
-//        viewModel.pokemonSet.observe(this, Observer<PokemonSet> {
-//            pokemonSet -> pokemonList = pokemonSet.pokemonSet
-//        })
-
-//        initializeRecyclerView()
+        viewModel.pokemonList.observe(this, Observer<List<Pokemon>> {
+            pokemonList -> recyclerView.adapter = PokemonAdapter(this, pokemonList)
+        })
     }
 
     private fun initializeRecyclerView() {
-//        recyclerView = binding.recyclerViewPokemonGrid
-//        recyclerViewLayoutManager = GridLayoutManager(this, 2)
-//        recyclerViewAdapter = PokemonAdapter(pokemonList)
     }
 }
