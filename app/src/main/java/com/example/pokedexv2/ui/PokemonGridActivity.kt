@@ -17,28 +17,32 @@ class PokemonGridActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var recyclerViewAdapter: RecyclerView.Adapter<*>
     private lateinit var recyclerViewLayoutManager: GridLayoutManager
-    private var pokemonList = listOf<Pokemon>()
+    private var pokemonLists = mutableListOf<Pokemon>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPokemonGridBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val viewModel = ViewModelProvider(this).get(PokemonGridActivityViewModel::class.java)
+        val viewModel =
+            ViewModelProvider(this).get(PokemonGridActivityViewModel::class.java)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        recyclerView = binding.recyclerViewPokemonGrid
-        recyclerViewLayoutManager = GridLayoutManager(this, 2)
-        recyclerViewAdapter = PokemonAdapter(pokemonList)
-        recyclerView.adapter = recyclerViewAdapter
-        recyclerView.layoutManager = recyclerViewLayoutManager
-
+        initializeRecyclerView()
         viewModel.pokemonList.observe(this, Observer<List<Pokemon>> {
-            pokemonList -> recyclerView.adapter = PokemonAdapter(pokemonList)
+            pokemonList -> pokemonLists.clear()
+            pokemonLists.addAll(pokemonList)
+            recyclerViewAdapter.notifyDataSetChanged()
         })
     }
 
     private fun initializeRecyclerView() {
+        recyclerView = binding.recyclerViewPokemonGrid
+        recyclerViewLayoutManager = GridLayoutManager(this, 2)
+        recyclerViewAdapter = PokemonAdapter(pokemonLists)
+        recyclerView.adapter = recyclerViewAdapter
+        recyclerView.layoutManager = recyclerViewLayoutManager
+
     }
 }

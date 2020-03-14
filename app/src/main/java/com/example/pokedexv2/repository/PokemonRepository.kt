@@ -25,7 +25,7 @@ object PokemonRepository {
         .client(OkHttpClient())
         .build().create(PokemonAPI::class.java)
 
-    fun getPokemonPage(url: String = "https://pokeapi.co/api/v2/pokemon"): MutableLiveData<PokemonPageResponse> {
+    fun getPokemonPage(url: String  = "https://pokeapi.co/api/v2/pokemon" ): MutableLiveData<PokemonPageResponse> {
         val pokemonPage = MutableLiveData<PokemonPageResponse>()
 
         pokemonAPI.getPokemonPage(url).enqueue(object: Callback<PokemonPageResponse> {
@@ -62,6 +62,9 @@ object PokemonRepository {
     fun getPokemonList(): MutableLiveData<List<Pokemon>> = pokemonListLiveData
 
     private fun addPokemonPageToPokemonList(newPokemonList: List<Pokemon>) {
+        for ((index, pokemon) in newPokemonList.withIndex()) {
+            pokemon.spriteUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonList.size + index + 1}.png"
+        }
         pokemonList.addAll(newPokemonList)
         pokemonListLiveData.value = pokemonList
     }

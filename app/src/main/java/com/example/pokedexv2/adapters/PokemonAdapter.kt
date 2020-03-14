@@ -2,6 +2,7 @@ package com.example.pokedexv2.adapters
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,8 +18,6 @@ import kotlinx.android.synthetic.main.card_pokemon_mini.view.*
 
 class PokemonAdapter(): RecyclerView.Adapter<PokemonAdapter.PokemonViewHolder>() {
     lateinit var pokemonList: List<Pokemon>
-    private lateinit var binding: CardPokemonMiniBinding
-    lateinit var context: Context
 
     constructor(pokemonList: List<Pokemon>) : this() {
         this.pokemonList = pokemonList
@@ -31,26 +30,24 @@ class PokemonAdapter(): RecyclerView.Adapter<PokemonAdapter.PokemonViewHolder>()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonViewHolder {
-        binding = CardPokemonMiniBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        this.context = parent.context
-//        val view = LayoutInflater.from(parent.context).inflate(R.layout.card_pokemon_mini, parent, false)
-        val view = binding.root
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.card_pokemon_mini, parent, false)
         return PokemonViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: PokemonViewHolder, position: Int) {
         val pokemon = pokemonList[position]
-        binding.pokemon = pokemon
+        holder.itemView.context
         holder.pokemonName.text = pokemon.name
+        holder.pokemonSprite.setImageDrawable(null)
         Glide
-            .with(binding.root)
-            .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${position + 1}.png") //TODO please refactor lol
-            .into(binding.imagePokemonSprite)
+            .with(holder.itemView.context)
+            .load(pokemon.spriteUrl) //TODO please refactor lol
+            .into(holder.pokemonSprite)
 
         holder.pokemonCard.setOnClickListener {
-            val intent = Intent(context, PokemonInfoActivity::class.java)
+            val intent = Intent(holder.itemView.context, PokemonInfoActivity::class.java)
             intent.putExtra("POKEMON_NAME", pokemon.name)
-            context.startActivity(intent)
+            holder.itemView.context.startActivity(intent)
         }
     }
     override fun getItemCount() = pokemonList.size
