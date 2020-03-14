@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import com.example.pokedexv2.data.PokemonPage
+import com.example.pokedexv2.data.Pokemon
+import com.example.pokedexv2.requests.response.PokemonPageResponse
 import com.example.pokedexv2.databinding.ActivityPokemonInfoBinding
 import com.example.pokedexv2.repository.PokemonRepository
+import com.example.pokedexv2.requests.response.PokemonResponse
 
 class PokemonInfoActivity : AppCompatActivity() {
 
@@ -17,11 +19,13 @@ class PokemonInfoActivity : AppCompatActivity() {
         binding = ActivityPokemonInfoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val pokemonPage =
-            PokemonRepository.getPokemonPage() as LiveData<PokemonPage>
+        val pokemonName = intent.getStringExtra("POKEMON_NAME")
 
-        pokemonPage.observe(this, Observer<PokemonPage> {
-            pokemonSet -> binding.textMamamo.text = pokemonSet.pokemonList[0].name
+        val pokemonPage = PokemonRepository.getPokemon(pokemonName)
+
+        pokemonPage.observe(this, Observer<PokemonResponse> {
+            pokemonResponse ->
+                binding.pokemon = Pokemon(name = pokemonName, type1 = pokemonResponse.types[0].typeObject.name)
         })
 
 

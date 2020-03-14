@@ -4,7 +4,9 @@ import android.util.Log
 import android.util.Log.d
 import androidx.lifecycle.MutableLiveData
 import com.example.pokedexv2.data.Pokemon
-import com.example.pokedexv2.data.PokemonPage
+import com.example.pokedexv2.requests.response.PokemonPageResponse
+import com.example.pokedexv2.requests.PokemonAPI
+import com.example.pokedexv2.requests.response.PokemonResponse
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -23,20 +25,38 @@ object PokemonRepository {
         .client(OkHttpClient())
         .build().create(PokemonAPI::class.java)
 
-    fun getPokemonPage(url: String = "https://pokeapi.co/api/v2/pokemon"): MutableLiveData<PokemonPage> {
-        val pokemonPage = MutableLiveData<PokemonPage>()
+    fun getPokemonPage(url: String = "https://pokeapi.co/api/v2/pokemon"): MutableLiveData<PokemonPageResponse> {
+        val pokemonPage = MutableLiveData<PokemonPageResponse>()
 
-        pokemonAPI.getPokemonPage(url).enqueue(object: Callback<PokemonPage> {
-            override fun onFailure(call: Call<PokemonPage>, t: Throwable) {
+        pokemonAPI.getPokemonPage(url).enqueue(object: Callback<PokemonPageResponse> {
+            override fun onFailure(call: Call<PokemonPageResponse>, t: Throwable) {
                 d("onFailure", t.toString())
             }
-            override fun onResponse(call: Call<PokemonPage>, response: Response<PokemonPage>) {
+            override fun onResponse(call: Call<PokemonPageResponse>, response: Response<PokemonPageResponse>) {
                 pokemonPage.value = response.body()
                 addPokemonPageToPokemonList(response.body()!!.pokemonList)
             }
         })
 
         return pokemonPage
+    }
+    fun getPokemon(name: String): MutableLiveData<PokemonResponse> {
+        val pokemonResponse = MutableLiveData<PokemonResponse>()
+
+        pokemonAPI.getPokemon(name).enqueue(object: Callback<PokemonResponse> {
+            override fun onFailure(call: Call<PokemonResponse>, t: Throwable) {
+                Log.d("onFailure", t.toString())
+            }
+            override fun onResponse(
+                call: Call<PokemonResponse>,
+                response: Response<PokemonResponse>
+            ) {
+                pokemonResponse.value = response.body()
+            }
+
+        })
+
+        return pokemonResponse
     }
 
     fun getPokemonList(): MutableLiveData<List<Pokemon>> = pokemonListLiveData

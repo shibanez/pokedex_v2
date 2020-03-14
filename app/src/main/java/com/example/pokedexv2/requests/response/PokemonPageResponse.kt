@@ -1,8 +1,9 @@
-package com.example.pokedexv2.data
+package com.example.pokedexv2.requests.response
 
+import com.example.pokedexv2.data.Pokemon
 import com.google.gson.annotations.SerializedName
 
-data class PokemonPage(
+data class PokemonPageResponse(
     @SerializedName("count")
     val total: Int,
     @SerializedName("next")
@@ -10,5 +11,4 @@ data class PokemonPage(
     @SerializedName("previous")
     val previousSetUrl: String,
     @SerializedName("results")
-    val pokemonList: List<Pokemon>) {
-}
+    val pokemonList: List<Pokemon>)
