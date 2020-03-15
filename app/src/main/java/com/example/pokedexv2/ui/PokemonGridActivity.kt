@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokedexv2.adapters.PokemonAdapter
+import com.example.pokedexv2.adapters.PokemonGridAdapter
 import com.example.pokedexv2.data.Pokemon
 import com.example.pokedexv2.databinding.ActivityPokemonGridBinding
 import com.example.pokedexv2.viewmodel.PokemonGridActivityViewModel
@@ -15,7 +16,7 @@ class PokemonGridActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPokemonGridBinding
     private lateinit var recyclerView: RecyclerView
-    private lateinit var recyclerViewAdapter: RecyclerView.Adapter<*>
+    private lateinit var recyclerViewAdapter: PokemonGridAdapter
     private lateinit var recyclerViewLayoutManager: GridLayoutManager
     private var pokemonLists = mutableListOf<Pokemon>()
 
@@ -31,18 +32,15 @@ class PokemonGridActivity : AppCompatActivity() {
 
         initializeRecyclerView()
         viewModel.pokemonList.observe(this, Observer<List<Pokemon>> {
-            pokemonList -> pokemonLists.clear()
-            pokemonLists.addAll(pokemonList)
-            recyclerViewAdapter.notifyDataSetChanged()
+            pokemonList -> recyclerViewAdapter.submitList(pokemonList)
         })
     }
 
     private fun initializeRecyclerView() {
         recyclerView = binding.recyclerViewPokemonGrid
         recyclerViewLayoutManager = GridLayoutManager(this, 2)
-        recyclerViewAdapter = PokemonAdapter(pokemonLists)
+        recyclerViewAdapter = PokemonGridAdapter()
         recyclerView.adapter = recyclerViewAdapter
         recyclerView.layoutManager = recyclerViewLayoutManager
-
     }
 }
