@@ -1,9 +1,10 @@
 package com.example.pokedexv2.data
 
-data class Pokemon(val name: String,
+data class Pokemon(var name: String,
+                   var id: Int = 0,
                    var spriteUrl: String = "",
                    var type1: String = "",
-                   var type2: String = "") {
+                   var type2: String? = null) {
 
     override fun equals(other: Any?): Boolean {
         if (javaClass != other?.javaClass) return false

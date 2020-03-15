@@ -9,22 +9,79 @@
             type="com.example.pokedexv2.data.Pokemon" />
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.PokemonInfoActivity">
-
-        <TextView
-            android:id="@+id/text_mamamo"
-            android:text="@{pokemon.name}"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/image_pokemon_detail_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="1dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bg_pokemon_type" />
+        <ImageView
+            android:id="@+id/image_pokemon_info_image"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="175dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:elevation="10dp"
+            tools:src="@drawable/bulbasaur" />
 
-        <TextView
-            android:id="@+id/text_type_1"
-            android:text="@{pokemon.type1}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="150dp"
+            android:layout_marginRight="10dp"
+            android:elevation="10dp"
+            app:cardCornerRadius="20dp">
 
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="75dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/text_pokemon_info_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    tools:text="Bulbasaur" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_type1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/spacing_medium"
+                        android:textColor="@android:color/white"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        tools:chipIcon="@drawable/icon_grass"
+                        tools:chipBackgroundColor="@color/grassType"
+                        tools:text="Grass" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_type2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/spacing_medium"
+                        android:textColor="@android:color/white"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        tools:chipIcon="@drawable/icon_poison"
+                        tools:chipBackgroundColor="@color/poisonType"
+                        tools:text="Poison" />
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
 </layout>

@@ -12,5 +12,4 @@ class PokemonInfoActivityViewModel: ViewModel() {
     fun getPokemon(name: String): MutableLiveData<Pokemon> {
         return PokemonRepository.getPokemon(name)
     }
-
 }

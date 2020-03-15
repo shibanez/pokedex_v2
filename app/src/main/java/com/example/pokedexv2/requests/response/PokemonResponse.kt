@@ -4,7 +4,9 @@ import com.google.gson.annotations.SerializedName
 
 data class PokemonResponse (
 //    @SerializedName("types")
-    val types: List<Type>
+    val types: List<Type>,
+    val name: String,
+    val id: Int
 )
 
 data class Type(

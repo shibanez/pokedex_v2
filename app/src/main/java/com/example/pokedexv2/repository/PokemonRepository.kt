@@ -47,21 +47,27 @@ object PokemonRepository {
             override fun onResponse(
                 call: Call<PokemonResponse>, response: Response<PokemonResponse>) {
                 val pokemonResponse = response.body()
-                val pokemon = Pokemon(name)
-                for (type in pokemonResponse!!.types) {
-                    if (type.slot == 1) {
-                        pokemon.type1 = type.typeObject.name
-                    } else if (type.slot == 2) {
-                        pokemon.type2 = type.typeObject.name
-                    }
-                }
+                val pokemon = parsePokemonResponse(pokemonResponse!!)
                 pokemonLiveData.value = pokemon
             }
         })
         return pokemonLiveData
     }
 
-    fun getPokemonList(): MutableLiveData<List<Pokemon>> = pokemonListLiveData
+    private fun parsePokemonResponse(pokemonResponse: PokemonResponse): Pokemon {
+        val pokemon = Pokemon(pokemonResponse.name)
+
+        pokemon.id = pokemonResponse.id
+        val pokemonTypes = pokemonResponse.types
+        for (type in pokemonTypes) {
+            if (type.slot == 1) {
+                pokemon.type1 = type.typeObject.name
+            } else if (type.slot == 2) {
+                pokemon.type2 = type.typeObject.name
+            }
+        }
+        return pokemon
+    }
 
     private fun addPokemonPageToPokemonList(newPokemonList: List<Pokemon>) {
         for ((index, pokemon) in newPokemonList.withIndex()) {
