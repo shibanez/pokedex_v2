@@ -1,5 +1,6 @@
 package com.example.pokedexv2.ui
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -36,14 +37,7 @@ class PokemonGridActivity : AppCompatActivity(), PokemonGridAdapter.Interaction 
         binding.viewModel = viewModel
 
         initializeRecyclerView()
-        viewModel.pokemonPage.observe(this, Observer<PokemonPageResponse> {
-            it ->
-            nextPageUrl = it.nextPageUrl
-            this.pokemonList.addAll(it.pokemonList)
-            recyclerViewAdapter.submitList(pokemonList)
-            isNextPageLoading = false
-            binding.progressBar.visibility = View.GONE
-        })
+        subscribeObservers()
     }
 
     private fun initializeRecyclerView() {
@@ -64,7 +58,21 @@ class PokemonGridActivity : AppCompatActivity(), PokemonGridAdapter.Interaction 
         })
     }
 
+    private fun subscribeObservers() {
+        viewModel.pokemonPage.observe(this, Observer<PokemonPageResponse> {
+                it ->
+            nextPageUrl = it.nextPageUrl
+            this.pokemonList.addAll(it.pokemonList)
+            recyclerViewAdapter.submitList(pokemonList)
+            isNextPageLoading = false
+            binding.progressBar.visibility = View.GONE
+        })
+    }
+
     override fun onItemSelected(position: Int, item: Pokemon) {
         Log.d("onItemSelected", "$position ${item.name}")
+        val intent = Intent(this, PokemonInfoActivity::class.java)
+        intent.putExtra("POKEMON_NAME", item.name)
+        startActivity(intent)
     }
 }

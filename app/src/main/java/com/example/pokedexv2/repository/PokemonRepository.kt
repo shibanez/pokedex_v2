@@ -38,23 +38,27 @@ object PokemonRepository {
         })
         return pokemonPage
     }
-    fun getPokemon(name: String): MutableLiveData<PokemonResponse> {
-        val pokemonResponse = MutableLiveData<PokemonResponse>()
-
+    fun getPokemon(name: String): MutableLiveData<Pokemon> {
+        val pokemonLiveData = MutableLiveData<Pokemon>()
         pokemonAPI.getPokemon(name).enqueue(object: Callback<PokemonResponse> {
             override fun onFailure(call: Call<PokemonResponse>, t: Throwable) {
                 Log.d("onFailure", t.toString())
             }
             override fun onResponse(
-                call: Call<PokemonResponse>,
-                response: Response<PokemonResponse>
-            ) {
-                pokemonResponse.value = response.body()
+                call: Call<PokemonResponse>, response: Response<PokemonResponse>) {
+                val pokemonResponse = response.body()
+                val pokemon = Pokemon(name)
+                for (type in pokemonResponse!!.types) {
+                    if (type.slot == 1) {
+                        pokemon.type1 = type.typeObject.name
+                    } else if (type.slot == 2) {
+                        pokemon.type2 = type.typeObject.name
+                    }
+                }
+                pokemonLiveData.value = pokemon
             }
-
         })
-
-        return pokemonResponse
+        return pokemonLiveData
     }
 
     fun getPokemonList(): MutableLiveData<List<Pokemon>> = pokemonListLiveData
