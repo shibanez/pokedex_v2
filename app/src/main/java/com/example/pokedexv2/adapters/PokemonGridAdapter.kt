@@ -29,7 +29,6 @@ class PokemonGridAdapter(private val interaction: Interaction? = null) :
     private val differ = AsyncListDiffer(this, DIFF_CALLBACK)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-
         return ViewHolder(
             LayoutInflater.from(parent.context).inflate(
                 R.layout.card_pokemon_mini,
@@ -54,6 +53,7 @@ class PokemonGridAdapter(private val interaction: Interaction? = null) :
 
     fun submitList(list: List<Pokemon>) {
         differ.submitList(list)
+        notifyDataSetChanged()
     }
 
     class ViewHolder
@@ -76,6 +76,8 @@ class PokemonGridAdapter(private val interaction: Interaction? = null) :
                 .into(pokemonSprite)
 
             pokemonName.text = item.name.capitalize()
+
+            Log.d("Pokemon", "$adapterPosition ${item.name} ${item.spriteUrl}")
         }
     }
 

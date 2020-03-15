@@ -51,6 +51,4 @@ class PokemonAdapter(): RecyclerView.Adapter<PokemonAdapter.PokemonViewHolder>()
         }
     }
     override fun getItemCount() = pokemonList.size
-
-
 }

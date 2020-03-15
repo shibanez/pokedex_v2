@@ -7,8 +7,20 @@
             name="viewModel"
             type="com.example.pokedexv2.viewmodel.PokemonGridActivityViewModel" />
     </data>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:visibility="visible"
+            tools:visibility="visible"/>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_pokemon_grid"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+    </FrameLayout>
 </layout>

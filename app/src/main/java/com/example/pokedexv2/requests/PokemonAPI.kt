@@ -1,5 +1,8 @@
 package com.example.pokedexv2.requests
 
+import androidx.paging.ItemKeyedDataSource
+import com.example.pokedexv2.data.Pokemon
+import com.example.pokedexv2.repository.PokemonRepository
 import com.example.pokedexv2.requests.response.PokemonPageResponse
 import com.example.pokedexv2.requests.response.PokemonResponse
 import retrofit2.Call

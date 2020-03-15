@@ -18,6 +18,7 @@ object PokemonRepository {
 
     private var pokemonList = mutableListOf<Pokemon>()
     private val pokemonListLiveData = MutableLiveData<List<Pokemon>>()
+    private val pokemonPage = MutableLiveData<PokemonPageResponse>()
 
     private val pokemonAPI = Retrofit.Builder()
         .baseUrl("https://pokeapi.co/api/v2/")
@@ -26,18 +27,15 @@ object PokemonRepository {
         .build().create(PokemonAPI::class.java)
 
     fun getPokemonPage(url: String  = "https://pokeapi.co/api/v2/pokemon" ): MutableLiveData<PokemonPageResponse> {
-        val pokemonPage = MutableLiveData<PokemonPageResponse>()
-
         pokemonAPI.getPokemonPage(url).enqueue(object: Callback<PokemonPageResponse> {
             override fun onFailure(call: Call<PokemonPageResponse>, t: Throwable) {
                 d("onFailure", t.toString())
             }
             override fun onResponse(call: Call<PokemonPageResponse>, response: Response<PokemonPageResponse>) {
-                pokemonPage.value = response.body()
                 addPokemonPageToPokemonList(response.body()!!.pokemonList)
+                pokemonPage.value = response.body()
             }
         })
-
         return pokemonPage
     }
     fun getPokemon(name: String): MutableLiveData<PokemonResponse> {

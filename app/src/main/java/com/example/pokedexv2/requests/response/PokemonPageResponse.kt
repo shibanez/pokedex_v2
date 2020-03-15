@@ -7,8 +7,8 @@ data class PokemonPageResponse(
     @SerializedName("count")
     val total: Int,
     @SerializedName("next")
-    val nextSetUrl: String,
+    val nextPageUrl: String,
     @SerializedName("previous")
-    val previousSetUrl: String,
+    val previousPageUrl: String,
     @SerializedName("results")
     val pokemonList: List<Pokemon>)
