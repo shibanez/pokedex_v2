@@ -3,22 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-        <variable
-            name="pokemon"
-            type="com.example.pokedexv2.data.Pokemon" />
-    </data>
-
     <androidx.cardview.widget.CardView
+        android:id="@+id/card_pokemon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/card_pokemon"
         android:layout_margin="@dimen/spacing_small"
-        android:padding="@dimen/spacing_medium"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?android:selectableItemBackground"
-        app:cardElevation="12dp"
+        app:cardElevation="5dp"
         app:cardCornerRadius="12dp">
 
         <LinearLayout
@@ -27,15 +20,18 @@
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/image_pokemon_sprite"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_gravity="center" />
+                android:layout_height="@dimen/sprite_image_height"
+                android:layout_gravity="center"
+                tools:src="@drawable/ic_launcher_foreground"/>
 
             <TextView
+                android:id="@+id/text_pokemon_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@{pokemon.name}"
+                android:layout_marginBottom="@dimen/spacing_medium"
                 tools:text="Ditto" />
         </LinearLayout>
 

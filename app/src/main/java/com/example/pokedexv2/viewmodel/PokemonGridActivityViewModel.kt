@@ -1,25 +1,23 @@
 package com.example.pokedexv2.viewmodel
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.pokedexv2.data.Pokemon
-import com.example.pokedexv2.data.PokemonPage
+import com.example.pokedexv2.requests.response.PokemonPageResponse
 import com.example.pokedexv2.repository.PokemonRepository
 
 class PokemonGridActivityViewModel: ViewModel() {
 
-    private var _pokemonPage = MutableLiveData<PokemonPage>()
-    private var _pokemonList = MutableLiveData<List<Pokemon>>()
+    private var _pokemonPage = PokemonRepository.getPokemonPage()
+//    private var _pokemonList = PokemonRepository.getPokemonList()
 
-    val pokemonPage: LiveData<PokemonPage>
+    val pokemonPage: LiveData<PokemonPageResponse>
         get() = _pokemonPage
-    val pokemonList: LiveData<List<Pokemon>>
-        get() = _pokemonList
+//    val pokemonList: LiveData<List<Pokemon>>
+//        get() = _pokemonList
 
-    init {
-        _pokemonPage = PokemonRepository.getPokemonPage()
-        _pokemonList.postValue(_pokemonPage.value?.pokemonList)
+    fun getPokemonPage(url: String) {
+        _pokemonPage = PokemonRepository.getPokemonPage(url)
     }
 
 }
