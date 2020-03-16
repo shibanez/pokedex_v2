@@ -10,21 +10,18 @@
     </data>
 
     <RelativeLayout
+        android:id="@+id/layout_pokemon_info"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/image_pokemon_detail_bg"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:elevation="1dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/bg_pokemon_type" />
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_pokemon_type"
+        android:backgroundTintMode="screen"
+        tools:backgroundTint="@color/grassType">
         <ImageView
             android:id="@+id/image_pokemon_info_image"
             android:layout_width="wrap_content"
-            android:layout_height="175dp"
+            android:layout_height="200dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="25dp"
             android:elevation="10dp"
             tools:src="@drawable/bulbasaur" />
 
@@ -48,8 +45,7 @@
                     android:id="@+id/text_pokemon_info_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="30sp"
-                    android:textStyle="bold"
+                    style="@style/TextAppearance.AppCompat.Headline"
                     tools:text="Bulbasaur" />
 
                 <LinearLayout

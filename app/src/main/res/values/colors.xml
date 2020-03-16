@@ -3,9 +3,7 @@
     <color name="colorPrimary">#ed1515</color>
     <color name="colorPrimaryDark">#b20000</color>
     <color name="colorAccent">#222224</color>
-    <color name="grassTypeLight">#A7DB8D</color>
     <color name="grassType">#78C850</color>
-
     <color name="fireType">#F08030</color>
     <color name="bugType">#A8B820</color>
     <color name="darkType">#705848</color>

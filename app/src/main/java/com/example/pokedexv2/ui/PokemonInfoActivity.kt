@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -40,10 +41,10 @@ class PokemonInfoActivity : AppCompatActivity() {
 
     private fun setPokemonInfoViews(pokemon: Pokemon) {
         val pokemonId = "%03d".format(pokemon.id)
-//TODO Background gradient
-//        val bgDrawable = GradientDrawable(GradientDrawable.Orientation.BL_TR, []
-//            resources.getIdentifier("${pokemon.type1}Type", "color", packageName))
-//        binding.imagePokemonDetailBg.setImageDrawable(bgDrawable)
+        binding.layoutPokemonInfo.background.setTint(
+            ContextCompat.getColor(this, resources
+                .getIdentifier("${pokemon.type1}Type", "color", packageName))
+        )
         Glide
             .with(this)
             .load("https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${pokemonId}.png")
