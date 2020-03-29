@@ -66,6 +66,8 @@ object PokemonRepository {
                 pokemon.type2 = type.typeObject.name
             }
         }
+        pokemon.weight = pokemonResponse.weight
+        pokemon.height = pokemonResponse.height
         return pokemon
     }
 

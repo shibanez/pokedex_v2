@@ -4,7 +4,9 @@ data class Pokemon(var name: String,
                    var id: Int = 0,
                    var spriteUrl: String = "",
                    var type1: String = "",
-                   var type2: String? = null) {
+                   var type2: String? = null,
+                   var weight: Int = 0,
+                   var height: Int = 0) {
 
     override fun equals(other: Any?): Boolean {
         if (javaClass != other?.javaClass) return false

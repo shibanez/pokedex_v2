@@ -3,12 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-        <variable
-            name="pokemon"
-            type="com.example.pokedexv2.data.Pokemon" />
-    </data>
-
     <RelativeLayout
         android:id="@+id/layout_pokemon_info"
         android:layout_width="match_parent"
@@ -16,6 +10,7 @@
         android:background="@drawable/bg_pokemon_type"
         android:backgroundTintMode="screen"
         tools:backgroundTint="@color/grassType">
+
         <ImageView
             android:id="@+id/image_pokemon_info_image"
             android:layout_width="wrap_content"
@@ -23,6 +18,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="25dp"
             android:elevation="10dp"
+            android:contentDescription="Official Pokemon Image"
             tools:src="@drawable/bulbasaur" />
 
         <androidx.cardview.widget.CardView
@@ -43,9 +39,9 @@
 
                 <TextView
                     android:id="@+id/text_pokemon_info_name"
+                    style="@style/TextAppearance.MaterialComponents.Headline4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/TextAppearance.AppCompat.Headline"
                     tools:text="Bulbasaur" />
 
                 <LinearLayout
@@ -60,10 +56,10 @@
                         android:layout_margin="@dimen/spacing_medium"
                         android:textColor="@android:color/white"
                         android:visibility="gone"
-                        tools:visibility="visible"
-                        tools:chipIcon="@drawable/icon_grass"
                         tools:chipBackgroundColor="@color/grassType"
-                        tools:text="Grass" />
+                        tools:chipIcon="@drawable/icon_grass"
+                        tools:text="Grass"
+                        tools:visibility="visible" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chip_type2"
@@ -72,10 +68,56 @@
                         android:layout_margin="@dimen/spacing_medium"
                         android:textColor="@android:color/white"
                         android:visibility="gone"
-                        tools:visibility="visible"
-                        tools:chipIcon="@drawable/icon_poison"
                         tools:chipBackgroundColor="@color/poisonType"
-                        tools:text="Poison" />
+                        tools:chipIcon="@drawable/icon_poison"
+                        tools:text="Poison"
+                        tools:visibility="visible" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:text="Height"
+                        android:textAlignment="center"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:text="Weight"
+                        android:textAlignment="center"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        style="@style/TextAppearance.MaterialComponents.Headline5"
+                        android:id="@+id/text_pokemon_height"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:textAlignment="center"
+                        tools:text="2\' 4&quot;" />
+
+                    <TextView
+                        style="@style/TextAppearance.MaterialComponents.Headline5"
+                        android:id="@+id/text_pokemon_weight"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:textAlignment="center"
+                        tools:text="15.2 lbs" />
                 </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>

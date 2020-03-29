@@ -15,6 +15,8 @@ import com.example.pokedexv2.R
 import com.example.pokedexv2.data.Pokemon
 import com.example.pokedexv2.databinding.ActivityPokemonInfoBinding
 import com.example.pokedexv2.viewmodel.PokemonInfoActivityViewModel
+import kotlin.math.ceil
+import kotlin.math.roundToInt
 
 class PokemonInfoActivity : AppCompatActivity() {
 
@@ -40,34 +42,66 @@ class PokemonInfoActivity : AppCompatActivity() {
     }
 
     private fun setPokemonInfoViews(pokemon: Pokemon) {
-        val pokemonId = "%03d".format(pokemon.id)
-        binding.layoutPokemonInfo.background.setTint(
-            ContextCompat.getColor(this, resources
-                .getIdentifier("${pokemon.type1}Type", "color", packageName))
-        )
-        Glide
-            .with(this)
-            .load("https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${pokemonId}.png")
-            .into(binding.imagePokemonInfoImage)
+        setBackgroundColor(pokemon.type1)
+        showPokemonImage(pokemon.id)
+        showPokemonTypes(pokemon.type1, pokemon.type2)
+        setPokemonInfoTexts(pokemon)
+    }
+
+    private fun setPokemonInfoTexts(pokemon: Pokemon) {
         binding.textPokemonInfoName.text = pokemon.name.capitalize()
-        binding.chipType1.text = pokemon.type1.capitalize()
+        binding.textPokemonWeight.text = convertWeight(pokemon.weight) + " lbs"
+        binding.textPokemonHeight.text = convertHeight(pokemon.height)
+    }
+
+    private fun convertHeight(height: Int): String {
+        val totalInches = (height * 3.937).roundToInt()
+        val feet = totalInches / 12
+        val remainingInches = totalInches % 12
+        val formattedRemainingInches = "%02d".format(remainingInches)
+        return "${feet}' ${formattedRemainingInches}\""
+    }
+
+    private fun convertWeight(weight: Int): String {
+        val convertedWeight: Double = weight * 0.220462
+        return String.format("%.1f", convertedWeight)
+    }
+
+    private fun showPokemonTypes(type1: String, type2: String?) {
+        binding.chipType1.text = type1.capitalize()
         binding.chipType1.setChipBackgroundColorResource(
-            resources.getIdentifier("${pokemon.type1}Type", "color", packageName)
+            resources.getIdentifier("${type1}Type", "color", packageName)
         )
         binding.chipType1.setChipIconResource(
-            resources.getIdentifier("icon_${pokemon.type1}", "drawable", packageName)
-        ) //TODO add other type icons
+            resources.getIdentifier("icon_${type1}", "drawable", packageName)
+        )
         binding.chipType1.visibility = View.VISIBLE
 
-        if (pokemon.type2 != null) {
-            binding.chipType2.text = pokemon.type2!!.capitalize()
+        if (type2 != null) {
+            binding.chipType2.text = type2!!.capitalize()
             binding.chipType2.setChipBackgroundColorResource(
-                resources.getIdentifier("${pokemon.type2}Type", "color", packageName)
+                resources.getIdentifier("${type2}Type", "color", packageName)
             )
             binding.chipType2.setChipIconResource(
-                resources.getIdentifier("icon_${pokemon.type2}", "drawable", packageName)
+                resources.getIdentifier("icon_${type2}", "drawable", packageName)
             )
             binding.chipType2.visibility = View.VISIBLE
         }
     }
+
+    private fun setBackgroundColor(mainType: String) {
+        binding.layoutPokemonInfo.background.setTint(
+            ContextCompat.getColor(this, resources
+                .getIdentifier("${mainType}Type", "color", packageName))
+        )
+    }
+
+    private fun showPokemonImage(id: Int) {
+        val pokemonId = "%03d".format(id)
+        Glide
+            .with(this)
+            .load("https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${pokemonId}.png")
+            .into(binding.imagePokemonInfoImage)
+    }
+
 }
