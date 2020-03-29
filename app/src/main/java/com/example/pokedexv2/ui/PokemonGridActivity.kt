@@ -60,10 +60,10 @@ class PokemonGridActivity : AppCompatActivity(), PokemonGridAdapter.Interaction 
 
     private fun subscribeObservers() {
         viewModel.pokemonPage.observe(this, Observer<PokemonPageResponse> {
-                it ->
             nextPageUrl = it.nextPageUrl
-            this.pokemonList.addAll(it.pokemonList)
-            recyclerViewAdapter.submitList(pokemonList)
+        })
+        viewModel.pokemonList.observe(this, Observer<List<Pokemon>> {
+            recyclerViewAdapter.submitList(it)
             isNextPageLoading = false
             binding.progressBar.visibility = View.GONE
         })

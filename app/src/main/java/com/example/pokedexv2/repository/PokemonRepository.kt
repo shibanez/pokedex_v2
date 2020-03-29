@@ -54,6 +54,10 @@ object PokemonRepository {
         return pokemonLiveData
     }
 
+    fun getPokemonList(): MutableLiveData<List<Pokemon>> {
+        return pokemonListLiveData
+    }
+
     private fun parsePokemonResponse(pokemonResponse: PokemonResponse): Pokemon {
         val pokemon = Pokemon(pokemonResponse.name)
 
