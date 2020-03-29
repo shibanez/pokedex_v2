@@ -21,9 +21,8 @@ class PokemonGridActivity : AppCompatActivity(), PokemonGridAdapter.Interaction 
     private lateinit var recyclerView: RecyclerView
     private lateinit var recyclerViewAdapter: PokemonGridAdapter
     private lateinit var recyclerViewLayoutManager: GridLayoutManager
-    private var nextPageUrl = "";
+    private var nextPageUrl = ""
     private lateinit var viewModel: PokemonGridActivityViewModel
-    private var pokemonList = mutableListOf<Pokemon>()
     private var isNextPageLoading = false
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -70,14 +70,13 @@ class PokemonGridAdapter(private val interaction: Interaction? = null) :
                 interaction?.onItemSelected(adapterPosition, item)
             }
 
+            val spriteUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${adapterPosition + 1}.png"
             Glide
                 .with(itemView)
-                .load(item.spriteUrl)
+                .load(spriteUrl)
                 .into(pokemonSprite)
 
             pokemonName.text = item.name.capitalize()
-
-            Log.d("Pokemon", "$adapterPosition ${item.name} ${item.spriteUrl}")
         }
     }
 

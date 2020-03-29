@@ -76,9 +76,6 @@ object PokemonRepository {
     }
 
     private fun addPokemonPageToPokemonList(newPokemonList: List<Pokemon>) {
-        for ((index, pokemon) in newPokemonList.withIndex()) {
-            pokemon.spriteUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonList.size + index + 1}.png"
-        }
         pokemonList.addAll(newPokemonList)
         pokemonListLiveData.value = pokemonList
     }

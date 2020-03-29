@@ -2,7 +2,6 @@ package com.example.pokedexv2.data
 
 data class Pokemon(var name: String,
                    var id: Int = 0,
-                   var spriteUrl: String = "",
                    var type1: String = "",
                    var type2: String? = null,
                    var weight: Int = 0,
@@ -13,7 +12,7 @@ data class Pokemon(var name: String,
 
         other as Pokemon
 
-        if (name != other.name || spriteUrl != other.spriteUrl ||
+        if (name != other.name ||
                 type1 != other.type1 || type2 != other.type2) return false
 
         return true
