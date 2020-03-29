@@ -47,7 +47,7 @@ object PokemonRepository {
             override fun onResponse(
                 call: Call<PokemonResponse>, response: Response<PokemonResponse>) {
                 val pokemonResponse = response.body()
-                val pokemon = parsePokemonResponse(pokemonResponse!!)
+                val pokemon = pokemonResponse?.let { parsePokemonResponse(it) }
                 pokemonLiveData.value = pokemon
             }
         })

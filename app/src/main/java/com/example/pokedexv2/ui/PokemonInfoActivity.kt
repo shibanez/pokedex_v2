@@ -3,6 +3,7 @@ package com.example.pokedexv2.ui
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -26,6 +27,7 @@ class PokemonInfoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPokemonInfoBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         pokemonName = intent.getStringExtra("POKEMON_NAME")!!
         viewModel = ViewModelProvider(this).get(PokemonInfoActivityViewModel::class.java)
         binding.lifecycleOwner = this
@@ -40,7 +42,12 @@ class PokemonInfoActivity : AppCompatActivity() {
 
     private fun subscribeObservers() {
         viewModel.getPokemon(pokemonName).observe(this, Observer<Pokemon> { it ->
-            setPokemonInfoViews(it)
+            if (it != null) {
+                setPokemonInfoViews(it)
+            } else {
+                Toast.makeText(this, "Pokemon not found!!!", Toast.LENGTH_SHORT).show()
+                finish()
+            }
         })
     }
 

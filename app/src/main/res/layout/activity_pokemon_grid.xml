@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_pokemon_grid">
-    <FrameLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -18,5 +18,16 @@
             android:id="@+id/recycler_view_pokemon_grid"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-    </FrameLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/button_search_pokemon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_large"
+            android:layout_gravity="bottom|right"
+            android:backgroundTint="@color/colorPrimary"
+            app:tint="#FFFFFF"
+            app:showMotionSpec="@anim/right_to_left"
+            app:elevation="@dimen/spacing_medium"
+            app:srcCompat="@drawable/ic_search"/>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
