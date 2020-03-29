@@ -49,10 +49,10 @@
 
                 <TextView
                     android:id="@+id/text_pokemon_info_name"
-                    style="@style/TextAppearance.MaterialComponents.Headline4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="Bulbasaur" />
+                    tools:text="Bulbasaur"
+                    style="@style/Title" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -65,7 +65,8 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/spacing_medium"
                         android:textColor="@android:color/white"
-                        android:visibility="gone"
+                        android:textAppearance="@style/Chip"
+                        android:clickable="false"
                         tools:chipBackgroundColor="@color/grassType"
                         tools:chipIcon="@drawable/icon_grass"
                         tools:text="Grass"
@@ -77,6 +78,8 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/spacing_medium"
                         android:textColor="@android:color/white"
+                        android:textAppearance="@style/Chip"
+                        android:clickable="false"
                         android:visibility="gone"
                         tools:chipBackgroundColor="@color/poisonType"
                         tools:chipIcon="@drawable/icon_poison"
@@ -89,22 +92,22 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                        android:id="@+id/text_pokemon_height"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
-                        android:text="Height"
                         android:textAlignment="center"
-                        android:textSize="18sp" />
+                        tools:text="2\' 4&quot;"
+                        style="@style/Headline3" />
 
                     <TextView
-                        style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                        android:id="@+id/text_pokemon_weight"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
-                        android:text="Weight"
                         android:textAlignment="center"
-                        android:textSize="18sp" />
+                        style="@style/Headline3"
+                        tools:text="15.25 lbs"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -112,22 +115,18 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/text_pokemon_height"
-                        style="@style/TextAppearance.MaterialComponents.Headline5"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
                         android:textAlignment="center"
-                        tools:text="2\' 4&quot;" />
+                        android:text="@string/height" />
 
                     <TextView
-                        android:id="@+id/text_pokemon_weight"
-                        style="@style/TextAppearance.MaterialComponents.Headline5"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
                         android:textAlignment="center"
-                        tools:text="15.2 lbs" />
+                        android:text="@string/weight" />
                 </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>

@@ -7,7 +7,17 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorPrimaryDark</item>
         <item name="android:statusBarColor">#000000</item>
-        <item name="android:fontFamily">@font/nunito</item>
+        <item name="android:fontFamily">@font/varela_round</item>
     </style>
 
+    <style name="Title">
+        <item name="android:textSize">36sp</item>
+    </style>
+    <style name="Headline3">
+        <item name="android:textSize">26sp</item>
+    </style>
+    <style name="Chip" parent="TextAppearance.MaterialComponents.Chip">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/varela_round</item>
+    </style>
 </resources>

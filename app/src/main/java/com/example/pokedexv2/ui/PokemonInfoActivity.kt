@@ -23,7 +23,6 @@ class PokemonInfoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         overridePendingTransition(R.anim.right_to_left, R.anim.exit)
-        hideStatusBar()
         super.onCreate(savedInstanceState)
         binding = ActivityPokemonInfoBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -32,6 +31,11 @@ class PokemonInfoActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
 
         subscribeObservers()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        hideStatusBar()
     }
 
     private fun subscribeObservers() {
