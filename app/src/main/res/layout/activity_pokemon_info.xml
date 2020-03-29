@@ -2,14 +2,24 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-
     <RelativeLayout
         android:id="@+id/layout_pokemon_info"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/bg_pokemon_type"
         android:backgroundTintMode="screen"
+        android:visibility="invisible"
+        tools:visibility="visible"
         tools:backgroundTint="@color/grassType">
+
+        <ImageView
+            android:id="@+id/image_pokeball"
+            android:layout_width="wrap_content"
+            android:layout_height="300dp"
+            android:elevation="1dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/pokemon"
+            tools:tint="@color/grassType" />
 
         <ImageView
             android:id="@+id/image_pokemon_info_image"
@@ -17,18 +27,18 @@
             android:layout_height="200dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="25dp"
-            android:elevation="10dp"
             android:contentDescription="Official Pokemon Image"
+            android:elevation="3dp"
             tools:src="@drawable/bulbasaur" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="500dp"
+            android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="150dp"
             android:layout_marginRight="10dp"
-            android:elevation="10dp"
-            app:cardCornerRadius="20dp">
+            app:cardCornerRadius="20dp"
+            app:cardElevation="2dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -102,8 +112,8 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        style="@style/TextAppearance.MaterialComponents.Headline5"
                         android:id="@+id/text_pokemon_height"
+                        style="@style/TextAppearance.MaterialComponents.Headline5"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
@@ -111,8 +121,8 @@
                         tools:text="2\' 4&quot;" />
 
                     <TextView
-                        style="@style/TextAppearance.MaterialComponents.Headline5"
                         android:id="@+id/text_pokemon_weight"
+                        style="@style/TextAppearance.MaterialComponents.Headline5"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"

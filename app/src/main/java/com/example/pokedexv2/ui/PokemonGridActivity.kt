@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.pokedexv2.R
 import com.example.pokedexv2.adapters.PokemonGridAdapter
 import com.example.pokedexv2.databinding.ActivityPokemonGridBinding
 import com.example.pokedexv2.requests.response.PokemonPageResponse
@@ -33,7 +34,6 @@ class PokemonGridActivity : AppCompatActivity(), PokemonGridAdapter.Interaction 
         viewModel =
             ViewModelProvider(this).get(PokemonGridActivityViewModel::class.java)
         binding.lifecycleOwner = this
-        binding.viewModel = viewModel
 
         initializeRecyclerView()
         subscribeObservers()

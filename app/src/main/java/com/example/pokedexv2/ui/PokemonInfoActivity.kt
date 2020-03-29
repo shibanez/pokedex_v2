@@ -1,12 +1,9 @@
 package com.example.pokedexv2.ui
 
-import android.graphics.Color
-import android.graphics.drawable.Drawable
-import android.graphics.drawable.GradientDrawable
-import androidx.appcompat.app.AppCompatActivity
+import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -15,8 +12,8 @@ import com.example.pokedexv2.R
 import com.example.pokedexv2.data.Pokemon
 import com.example.pokedexv2.databinding.ActivityPokemonInfoBinding
 import com.example.pokedexv2.viewmodel.PokemonInfoActivityViewModel
-import kotlin.math.ceil
 import kotlin.math.roundToInt
+
 
 class PokemonInfoActivity : AppCompatActivity() {
 
@@ -25,6 +22,8 @@ class PokemonInfoActivity : AppCompatActivity() {
     private lateinit var pokemonName: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        overridePendingTransition(R.anim.right_to_left, R.anim.exit)
+        hideStatusBar()
         super.onCreate(savedInstanceState)
         binding = ActivityPokemonInfoBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -36,8 +35,8 @@ class PokemonInfoActivity : AppCompatActivity() {
     }
 
     private fun subscribeObservers() {
-        viewModel.getPokemon(pokemonName).observe(this, Observer<Pokemon> {
-            it -> setPokemonInfoViews(it)
+        viewModel.getPokemon(pokemonName).observe(this, Observer<Pokemon> { it ->
+            setPokemonInfoViews(it)
         })
     }
 
@@ -46,6 +45,7 @@ class PokemonInfoActivity : AppCompatActivity() {
         showPokemonImage(pokemon.id)
         showPokemonTypes(pokemon.type1, pokemon.type2)
         setPokemonInfoTexts(pokemon)
+        binding.layoutPokemonInfo.visibility = View.VISIBLE
     }
 
     private fun setPokemonInfoTexts(pokemon: Pokemon) {
@@ -90,10 +90,10 @@ class PokemonInfoActivity : AppCompatActivity() {
     }
 
     private fun setBackgroundColor(mainType: String) {
-        binding.layoutPokemonInfo.background.setTint(
-            ContextCompat.getColor(this, resources
-                .getIdentifier("${mainType}Type", "color", packageName))
-        )
+        val typeColor = ContextCompat.getColor(this, resources
+            .getIdentifier("${mainType}Type", "color", packageName))
+        binding.layoutPokemonInfo.background.setTint(typeColor)
+        binding.imagePokeball.setColorFilter(typeColor)
     }
 
     private fun showPokemonImage(id: Int) {
@@ -102,6 +102,16 @@ class PokemonInfoActivity : AppCompatActivity() {
             .with(this)
             .load("https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${pokemonId}.png")
             .into(binding.imagePokemonInfoImage)
+    }
+
+    fun hideStatusBar() {
+        window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+//                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_FULLSCREEN
+                or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+
     }
 
 }
