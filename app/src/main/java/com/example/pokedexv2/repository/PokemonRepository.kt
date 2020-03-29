@@ -38,31 +38,44 @@ object PokemonRepository {
         })
         return pokemonPage
     }
-    fun getPokemon(name: String): MutableLiveData<PokemonResponse> {
-        val pokemonResponse = MutableLiveData<PokemonResponse>()
-
+    fun getPokemon(name: String): MutableLiveData<Pokemon> {
+        val pokemonLiveData = MutableLiveData<Pokemon>()
         pokemonAPI.getPokemon(name).enqueue(object: Callback<PokemonResponse> {
             override fun onFailure(call: Call<PokemonResponse>, t: Throwable) {
                 Log.d("onFailure", t.toString())
             }
             override fun onResponse(
-                call: Call<PokemonResponse>,
-                response: Response<PokemonResponse>
-            ) {
-                pokemonResponse.value = response.body()
+                call: Call<PokemonResponse>, response: Response<PokemonResponse>) {
+                val pokemonResponse = response.body()
+                val pokemon = pokemonResponse?.let { parsePokemonResponse(it) }
+                pokemonLiveData.value = pokemon
             }
-
         })
-
-        return pokemonResponse
+        return pokemonLiveData
     }
 
-    fun getPokemonList(): MutableLiveData<List<Pokemon>> = pokemonListLiveData
+    fun getPokemonList(): MutableLiveData<List<Pokemon>> {
+        return pokemonListLiveData
+    }
+
+    private fun parsePokemonResponse(pokemonResponse: PokemonResponse): Pokemon {
+        val pokemon = Pokemon(pokemonResponse.name)
+
+        pokemon.id = pokemonResponse.id
+        val pokemonTypes = pokemonResponse.types
+        for (type in pokemonTypes) {
+            if (type.slot == 1) {
+                pokemon.type1 = type.typeObject.name
+            } else if (type.slot == 2) {
+                pokemon.type2 = type.typeObject.name
+            }
+        }
+        pokemon.weight = pokemonResponse.weight
+        pokemon.height = pokemonResponse.height
+        return pokemon
+    }
 
     private fun addPokemonPageToPokemonList(newPokemonList: List<Pokemon>) {
-        for ((index, pokemon) in newPokemonList.withIndex()) {
-            pokemon.spriteUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonList.size + index + 1}.png"
-        }
         pokemonList.addAll(newPokemonList)
         pokemonListLiveData.value = pokemonList
     }
