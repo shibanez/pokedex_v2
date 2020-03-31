@@ -53,16 +53,20 @@ class PokemonInfoActivity : AppCompatActivity() {
 
     private fun setPokemonInfoViews(pokemon: Pokemon) {
         setBackgroundColor(pokemon.type1)
-        showPokemonImage(pokemon.id)
+        val pokemonId = "%03d".format(pokemon.id)
+        showPokemonImage(pokemonId)
         showPokemonTypes(pokemon.type1, pokemon.type2)
-        setPokemonInfoTexts(pokemon)
+        setPokemonInfoTexts(pokemon, pokemonId)
         binding.layoutPokemonInfo.visibility = View.VISIBLE
     }
 
-    private fun setPokemonInfoTexts(pokemon: Pokemon) {
+    private fun setPokemonInfoTexts(pokemon: Pokemon, pokemonId: String) {
         binding.textPokemonInfoName.text = pokemon.name.capitalize()
+        binding.textPokemonNumber.text = "#${pokemonId}"
         binding.textPokemonWeight.text = convertWeight(pokemon.weight) + " lbs"
         binding.textPokemonHeight.text = convertHeight(pokemon.height)
+        binding.textPokemonDescription.text = pokemon.description
+//        Toast.makeText(this, pokemon.description + " WIW", Toast.LENGTH_SHORT).show()
     }
 
     private fun convertHeight(height: Int): String {
@@ -105,14 +109,14 @@ class PokemonInfoActivity : AppCompatActivity() {
             .getIdentifier("${mainType}Type", "color", packageName))
         binding.layoutPokemonInfo.background.setTint(typeColor)
         binding.imagePokeball.setColorFilter(typeColor)
+        binding.textPokemonNumber.setTextColor(typeColor)
     }
 
-    private fun showPokemonImage(id: Int) {
-        val pokemonId = "%03d".format(id)
+    private fun showPokemonImage(id: String) {
         Glide
             .with(this)
-            .load("https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${pokemonId}.png")
-            .into(binding.imagePokemonInfoImage)
+            .load("https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${id}.png")
+            .into(binding.imagePokemonInfo)
     }
 
     fun hideStatusBar() {

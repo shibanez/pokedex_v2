@@ -5,6 +5,7 @@ import com.example.pokedexv2.data.Pokemon
 import com.example.pokedexv2.repository.PokemonRepository
 import com.example.pokedexv2.requests.response.PokemonPageResponse
 import com.example.pokedexv2.requests.response.PokemonResponse
+import com.example.pokedexv2.requests.response.PokemonSpeciesResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -20,4 +21,7 @@ interface PokemonAPI {
         @Path("pokemon")
         pokemon: String
     ): Call<PokemonResponse>
+
+    @GET
+    fun getPokemonSpecies(@Url url: String): Call<PokemonSpeciesResponse>
 }

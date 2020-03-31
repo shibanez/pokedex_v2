@@ -7,6 +7,7 @@ import com.example.pokedexv2.data.Pokemon
 import com.example.pokedexv2.requests.response.PokemonPageResponse
 import com.example.pokedexv2.requests.PokemonAPI
 import com.example.pokedexv2.requests.response.PokemonResponse
+import com.example.pokedexv2.requests.response.PokemonSpeciesResponse
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -19,6 +20,7 @@ object PokemonRepository {
     private var pokemonList = mutableListOf<Pokemon>()
     private val pokemonListLiveData = MutableLiveData<List<Pokemon>>()
     private val pokemonPage = MutableLiveData<PokemonPageResponse>()
+    val pokemonLiveData = MutableLiveData<Pokemon>()
 
     private val pokemonAPI = Retrofit.Builder()
         .baseUrl("https://pokeapi.co/api/v2/")
@@ -39,7 +41,6 @@ object PokemonRepository {
         return pokemonPage
     }
     fun getPokemon(name: String): MutableLiveData<Pokemon> {
-        val pokemonLiveData = MutableLiveData<Pokemon>()
         pokemonAPI.getPokemon(name).enqueue(object: Callback<PokemonResponse> {
             override fun onFailure(call: Call<PokemonResponse>, t: Throwable) {
                 Log.d("onFailure", t.toString())
@@ -57,6 +58,27 @@ object PokemonRepository {
     fun getPokemonList(): MutableLiveData<List<Pokemon>> {
         return pokemonListLiveData
     }
+    private fun getPokemonSpeciesFlavorText(url: String) {
+        pokemonAPI.getPokemonSpecies(url).enqueue(object: Callback<PokemonSpeciesResponse> {
+            override fun onFailure(call: Call<PokemonSpeciesResponse>, t: Throwable) {
+                Log.d("onFailure", t.toString())
+            }
+            override fun onResponse(
+                call: Call<PokemonSpeciesResponse>,
+                response: Response<PokemonSpeciesResponse>) {
+                val pokemonSpeciesResponse = response.body()
+                for (flavorText in pokemonSpeciesResponse!!.flavorTexts) {
+                    if (flavorText.language.name == "en" && flavorText.version.name == "x") {
+                        Log.d("flavor", flavorText.flavorText)
+                        val pokemon = pokemonLiveData.value
+                        pokemon?.description = flavorText.flavorText
+                        pokemonLiveData.value = pokemon
+                    }
+                }
+            }
+
+        })
+    }
 
     private fun parsePokemonResponse(pokemonResponse: PokemonResponse): Pokemon {
         val pokemon = Pokemon(pokemonResponse.name)
@@ -72,6 +94,7 @@ object PokemonRepository {
         }
         pokemon.weight = pokemonResponse.weight
         pokemon.height = pokemonResponse.height
+        getPokemonSpeciesFlavorText(pokemonResponse.species.url)
         return pokemon
     }
 

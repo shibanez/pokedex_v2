@@ -8,7 +8,8 @@ data class PokemonResponse(
     val name: String,
     val id: Int,
     val height: Int,
-    val weight: Int
+    val weight: Int,
+    val species: Species
 )
 
 data class Type(
@@ -19,4 +20,9 @@ data class Type(
 
 data class TypeObject(
     val name: String
+)
+
+data class Species(
+    val name: String,
+    val url: String
 )
