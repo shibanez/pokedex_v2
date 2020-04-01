@@ -7,9 +7,9 @@ Pokedex v2 is a native android mobile application.
   - Brief info regarding the Pokemon
   - 
 ## Preview
-![Imgur](https://i.imgur.com/9TQmeJf.jpg?1) ![Imgur](https://i.imgur.com/uV05Pbe.jpg?1)
-![Imgur](https://i.imgur.com/djcvMn4.jpg?1) ![Imgur](https://i.imgur.com/pSMJvqL.jpg?1)
-![Imgur](https://i.imgur.com/Uq7USOV.jpg?1)
+![Imgur](https://i.imgur.com/9TQmeJf.jpg?2) ![Imgur](https://i.imgur.com/uV05Pbe.jpg?3)
+![Imgur](https://i.imgur.com/djcvMn4.jpg?2) ![Imgur](https://i.imgur.com/pSMJvqL.jpg?2)
+![Imgur](https://i.imgur.com/Uq7USOV.jpg?2)
 ### Tech
 
 This app uses a number of libraries to work properly:
@@ -27,3 +27,4 @@ This app uses a number of libraries to work properly:
  - Write Espresso Tests
  - Dependency Injection using Dagger
  - Add Pokemon to favorites and favorites list
+ - More Pokemon Info
