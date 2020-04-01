@@ -1,6 +1,7 @@
 package com.example.pokedexv2.ui
 
-import android.os.Build
+import android.graphics.Bitmap
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -65,7 +66,7 @@ class PokemonInfoActivity : AppCompatActivity() {
         binding.textPokemonNumber.text = "#${pokemonId}"
         binding.textPokemonWeight.text = convertWeight(pokemon.weight) + " lbs"
         binding.textPokemonHeight.text = convertHeight(pokemon.height)
-        binding.textPokemonDescription.text = pokemon.description
+        binding.textPokemonDescription.text = pokemon.description.replace("\n", " ")
 //        Toast.makeText(this, pokemon.description + " WIW", Toast.LENGTH_SHORT).show()
     }
 
@@ -118,6 +119,7 @@ class PokemonInfoActivity : AppCompatActivity() {
             .load("https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${id}.png")
             .into(binding.imagePokemonInfo)
     }
+
 
     fun hideStatusBar() {
         window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE

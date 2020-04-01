@@ -20,7 +20,6 @@ object PokemonRepository {
     private var pokemonList = mutableListOf<Pokemon>()
     private val pokemonListLiveData = MutableLiveData<List<Pokemon>>()
     private val pokemonPage = MutableLiveData<PokemonPageResponse>()
-    val pokemonLiveData = MutableLiveData<Pokemon>()
 
     private val pokemonAPI = Retrofit.Builder()
         .baseUrl("https://pokeapi.co/api/v2/")
@@ -41,6 +40,7 @@ object PokemonRepository {
         return pokemonPage
     }
     fun getPokemon(name: String): MutableLiveData<Pokemon> {
+        val pokemonLiveData = MutableLiveData<Pokemon>()
         pokemonAPI.getPokemon(name).enqueue(object: Callback<PokemonResponse> {
             override fun onFailure(call: Call<PokemonResponse>, t: Throwable) {
                 Log.d("onFailure", t.toString())
@@ -49,7 +49,14 @@ object PokemonRepository {
                 call: Call<PokemonResponse>, response: Response<PokemonResponse>) {
                 val pokemonResponse = response.body()
                 val pokemon = pokemonResponse?.let { parsePokemonResponse(it) }
-                pokemonLiveData.value = pokemon
+                if (pokemonResponse!!.species != null) {
+                    pokemon?.let {
+                        getPokemonSpeciesFlavorText(pokemonResponse.species.url,
+                            it, pokemonLiveData)
+                    }
+                } else {
+                    pokemonLiveData.value = pokemon
+                }
             }
         })
         return pokemonLiveData
@@ -58,7 +65,7 @@ object PokemonRepository {
     fun getPokemonList(): MutableLiveData<List<Pokemon>> {
         return pokemonListLiveData
     }
-    private fun getPokemonSpeciesFlavorText(url: String) {
+    private fun getPokemonSpeciesFlavorText(url: String, pokemon: Pokemon, pokemonLiveData: MutableLiveData<Pokemon>) {
         pokemonAPI.getPokemonSpecies(url).enqueue(object: Callback<PokemonSpeciesResponse> {
             override fun onFailure(call: Call<PokemonSpeciesResponse>, t: Throwable) {
                 Log.d("onFailure", t.toString())
@@ -67,17 +74,20 @@ object PokemonRepository {
                 call: Call<PokemonSpeciesResponse>,
                 response: Response<PokemonSpeciesResponse>) {
                 val pokemonSpeciesResponse = response.body()
-                for (flavorText in pokemonSpeciesResponse!!.flavorTexts) {
-                    if (flavorText.language.name == "en" && flavorText.version.name == "x") {
-                        Log.d("flavor", flavorText.flavorText)
-                        val pokemon = pokemonLiveData.value
-                        pokemon?.description = flavorText.flavorText
-                        pokemonLiveData.value = pokemon
-                    }
-                }
+                pokemon.description = getPokemonDescription(pokemonSpeciesResponse!!)
+                pokemonLiveData.value = pokemon
             }
-
         })
+    }
+    private fun getPokemonDescription(pokemonSpeciesResponse: PokemonSpeciesResponse): String {
+        for (flavorText in pokemonSpeciesResponse.flavorTexts) {
+            if (flavorText.language.name == "en" &&
+                flavorText.version.name in listOf("ultra-sun", "x")) {
+                Log.d("flavor", flavorText.flavorText)
+                return flavorText.flavorText
+            }
+        }
+        return "Not available"
     }
 
     private fun parsePokemonResponse(pokemonResponse: PokemonResponse): Pokemon {
@@ -94,7 +104,6 @@ object PokemonRepository {
         }
         pokemon.weight = pokemonResponse.weight
         pokemon.height = pokemonResponse.height
-        getPokemonSpeciesFlavorText(pokemonResponse.species.url)
         return pokemon
     }
 
