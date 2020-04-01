@@ -5,11 +5,11 @@ Pokedex v2 is a native android mobile application.
   - Browsed through paged list of Pokemons
   - Simple Pokemon search using the Pokemon Name
   - Brief info regarding the Pokemon
-  - 
+
 ## Preview
-![Imgur](https://i.imgur.com/9TQmeJf.jpg?2) ![Imgur](https://i.imgur.com/uV05Pbe.jpg?3)
-![Imgur](https://i.imgur.com/djcvMn4.jpg?2) ![Imgur](https://i.imgur.com/pSMJvqL.jpg?2)
-![Imgur](https://i.imgur.com/Uq7USOV.jpg?2)
+![Imgur](https://i.imgur.com/9TQmeJf.jpg?4) ![Imgur](https://i.imgur.com/uV05Pbe.jpg?4)
+![Imgur](https://i.imgur.com/djcvMn4.jpg?3) ![Imgur](https://i.imgur.com/pSMJvqL.jpg?3)
+![Imgur](https://i.imgur.com/Uq7USOV.jpg?3)
 ### Tech
 
 This app uses a number of libraries to work properly:
