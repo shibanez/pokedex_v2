@@ -1,6 +1,6 @@
 # Pokedex v2
 
-Pokedex v2 is a native android mobile application.
+Pokedex v2 is a native android mobile application. Made this project for practice using alternative/newer libraries I haven't used before, fetch using API and to try building an application following MVVM architecture.
 
   - Browsed through paged list of Pokemons
   - Simple Pokemon search using the Pokemon Name
